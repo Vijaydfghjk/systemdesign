@@ -1,0 +1,63 @@
+package main
+
+import "fmt"
+
+type Product interface {
+	Executive()
+}
+type Area1 struct {
+	place string
+}
+
+func (p *Area1) Executive() {
+
+	p.place = "chennai"
+	fmt.Println(p)
+}
+
+type Area2 struct {
+	place     string
+	numofshop int
+}
+
+func (p *Area2) Executive() {
+
+	p.place = "BLR"
+	p.numofshop = 15
+
+	fmt.Println(p)
+
+}
+
+type Dummy struct {
+}
+
+func (c *Dummy) productname(name string) Product {
+
+	switch name {
+
+	case "mobile":
+
+		return &Area1{}
+	case "Dress":
+
+		return &Area2{}
+	default:
+		return nil
+	}
+
+}
+
+func main() {
+
+	D := &Dummy{}
+
+	p1 := D.productname("mobile")
+	p2 := D.productname("Dress")
+
+	p1.Executive()
+	p2.Executive()
+
+	
+
+}
