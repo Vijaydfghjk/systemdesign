@@ -1,0 +1,76 @@
+/*
+
+
+The singleton pattern ensures that a class(struct) has only one instance(object), and provides a global point of access to it.
+
+
+*/
+
+package main
+
+import (
+	"fmt"
+	"sync"
+)
+
+type mylogger struct {
+	loglevel int
+}
+
+func (l *mylogger) Log(s string) {
+
+	fmt.Println(l.loglevel, ":", s)
+
+}
+
+func (l *mylogger) setLogLevel(level int) {
+
+	l.loglevel = level
+
+}
+
+var logger *mylogger
+var once sync.Once
+
+func getLoggerInstance() *mylogger {
+
+	//fmt.Println("logeer is ", logger)
+
+	once.Do(func() {    // here this once it will execute in only one time 
+
+		if logger == nil {
+
+			fmt.Println("Creating Logger instance")
+			logger = &mylogger{}
+		}
+
+	})
+
+	fmt.Println("Returning Logger instance")
+	return logger
+}
+
+func main() {
+
+	log := getLoggerInstance()
+
+	log.setLogLevel(1)               // Returning Logger instance
+	log.Log("This is a log message") // 1 This is a log message
+	// Returning Logger instance
+	log = getLoggerInstance()
+	log.setLogLevel(2)
+	log.Log("This is a log messae2") // 2 This is a log message
+
+	log = getLoggerInstance() // Returning Logger instance
+	log.setLogLevel(3)
+	log.Log("This is a log message") // 3 This is a log message
+	/*
+		for i := 1; i < 10; i++ {
+
+			go getLoggerInstance()
+		}
+
+		fmt.Scanln()
+
+	*/
+}
