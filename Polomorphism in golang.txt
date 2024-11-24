@@ -1,0 +1,78 @@
+package main
+
+import "fmt"
+
+type Reading interface {
+	reading_time() int
+}
+
+type Book struct {
+	name       string
+	page_count int
+}
+
+type Newspaper struct {
+	name       string
+	page_count int
+}
+
+type Magazine struct {
+	name       string
+	page_count int
+}
+
+func (book *Book) reading_time() int {
+
+	Read_time := 10 * book.page_count
+
+	return Read_time
+}
+
+func (new *Newspaper) reading_time() int {
+
+	Read_time := 20 * new.page_count
+
+	return Read_time
+}
+
+func (mac *Magazine) reading_time() int {
+
+	Read_time := 30 * mac.page_count
+
+	return Read_time
+}
+
+func Calc(Getread []Reading) {
+
+	overall := 0
+	for _, v := range Getread {
+
+		overall += v.reading_time()
+	}
+	fmt.Println("Total is", overall)
+}
+
+func main() {
+
+	res1 := &Book{
+
+		name:       "MyBook",
+		page_count: 2,
+	}
+
+	res2 := &Newspaper{
+
+		name:       "Today India",
+		page_count: 3,
+	}
+
+	res3 := &Magazine{
+
+		name:       "Best",
+		page_count: 4,
+	}
+
+	dumb := []Reading{res1, res2, res3}
+
+	Calc(dumb)
+}
